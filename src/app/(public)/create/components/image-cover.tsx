@@ -1,11 +1,11 @@
-import type { IForm } from '@/models/form'
+import type { IForm, IFormCreate } from '@/models/form'
 import { Image as ImageIcon, Plus } from 'lucide-react'
 import Image from 'next/image'
 import type { UseFormSetValue } from 'react-hook-form'
 import toast from 'react-hot-toast'
 
 interface ImageCoverProps {
-  setValue: UseFormSetValue<IForm>
+  setValue: UseFormSetValue<IFormCreate>
   value: File | null
 }
 
@@ -39,7 +39,9 @@ export default function ImageCover({ setValue, value }: ImageCoverProps) {
         className="shadow-form text-black-text absolute right-6 bottom-6 flex cursor-pointer items-center justify-between gap-2 rounded-[12px] bg-white px-4 py-3"
       >
         <Plus size={20} />
-        {value ? 'Alterar Capa' : 'Adicionar Capa'}
+        <span className="hidden lg:block">
+          {value ? 'Alterar Capa' : 'Adicionar Capa'}
+        </span>
       </label>
       <input
         type="file"

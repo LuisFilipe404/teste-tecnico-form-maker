@@ -8,6 +8,7 @@ export default function FieldButton({ icon, onClick, text }: FieldButtonProps) {
   return (
     <button
       onClick={onClick}
+      type="button"
       className="border-gray-border hover:bg-primary-400/10 hover:border-primary-400 flex h-[100px] cursor-pointer flex-col items-center justify-center gap-3 rounded-[12px] border py-5 transition-colors"
     >
       {icon}

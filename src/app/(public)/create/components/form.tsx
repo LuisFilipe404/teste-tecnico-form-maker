@@ -1,9 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { useForm } from 'react-hook-form'
 import ImageCover from './image-cover'
-import { IForm } from '@/models/form'
+import { type IFormCreate } from '@/models/form'
 import InputTitle from '@/components/input-title'
 import InputSubTitle from '@/components/input-subtitle'
 import { useFormStore } from '../store/form-store'
@@ -19,38 +18,33 @@ import {
 import {
   SortableContext,
   arrayMove,
-  useSortable,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable'
-import { CSS } from '@dnd-kit/utilities'
 import SortableField from './sortable-field'
 
-export default function Form() {
+interface FormProps {
+  setValue: (name: keyof IFormCreate, value: any) => void
+  watch: (name: keyof IFormCreate) => any
+}
+
+export default function Form({ setValue, watch }: FormProps) {
   const questions = useFormStore((state) => state.questions)
   const reorderQuestions = useFormStore((state) => state.reorderQuestions)
-
-  const { watch, setValue } = useForm<IForm>({
-    defaultValues: {
-      title: 'Formulário sem Título',
-      subtitle: '',
-      cover: null,
-    },
-  })
 
   const [activeId, setActiveId] = useState<string | null>(null)
 
   return (
-    <div className="shadow-form overflow-hidden rounded-[16px]">
+    <div className="shadow-form w-full overflow-hidden rounded-[16px]">
       <ImageCover setValue={setValue} value={watch('cover')} />
       <div className="flex flex-col items-center bg-white p-8">
         <InputTitle
           onChange={(value) => setValue('title', value)}
-          value={watch('title')}
+          value={watch('title') || ''}
         />
         <div className="mt-2 w-full">
           <InputSubTitle
             onChange={(value) => setValue('subtitle', value)}
-            value={watch('subtitle')}
+            value={watch('subtitle') || ''}
           />
         </div>
         <DndContext

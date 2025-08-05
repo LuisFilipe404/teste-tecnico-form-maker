@@ -1,6 +1,8 @@
+import createForm from '@/actions/create-form'
 import type { IForm } from '@/models/form'
 import type { IQuestion } from '@/models/question'
 import { enableMapSet } from 'immer'
+import toast from 'react-hot-toast'
 import { create } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
 
@@ -18,6 +20,7 @@ interface IFormStore {
   reorderQuestions: (ids: string[]) => void
   addConditionalQuestion: (id: string, order: number) => void
   updateConditionalQuestion: (id: string, order: number, value: string) => void
+  saveForm: (formData: FormData) => void
 }
 
 interface AddQuestionParams {
@@ -41,6 +44,7 @@ export const useFormStore = create<IFormStore, [['zustand/immer', never]]>(
           id,
           title: '',
           type,
+          order: state.questions.size,
           required: false,
           choices:
             type === 'multiple_choice' || type === 'unique_choice'
@@ -88,7 +92,6 @@ export const useFormStore = create<IFormStore, [['zustand/immer', never]]>(
         }
       })
 
-      // Reorder choices
       set((state) => {
         const question = state.questions.get(id)
         if (question && question.choices) {
@@ -115,6 +118,17 @@ export const useFormStore = create<IFormStore, [['zustand/immer', never]]>(
     const deleteQuestion = (id: string) => {
       set((state) => {
         state.questions.delete(id)
+
+        const newQuestions = new Map<string, IQuestion>()
+
+        Array.from(state.questions.entries()).forEach(
+          ([qid, question], index) => {
+            question.order = index
+            newQuestions.set(qid, question)
+          },
+        )
+
+        state.questions = newQuestions
       })
     }
 
@@ -138,6 +152,7 @@ export const useFormStore = create<IFormStore, [['zustand/immer', never]]>(
               title: '',
               type: 'text',
               required: false,
+              order: 0,
               choices: undefined,
             },
           ],
@@ -153,9 +168,10 @@ export const useFormStore = create<IFormStore, [['zustand/immer', never]]>(
     const reorderQuestions = (ids: string[]) => {
       set((state) => {
         const newQuestions = new Map<string, IQuestion>()
-        ids.forEach((id) => {
+        ids.forEach((id, index) => {
           const question = state.questions.get(id)
           if (question) {
+            question.order = index
             newQuestions.set(id, question)
           }
         })
@@ -165,6 +181,7 @@ export const useFormStore = create<IFormStore, [['zustand/immer', never]]>(
             newQuestions.set(id, q)
           }
         })
+
         state.questions = newQuestions
       })
     }
@@ -219,6 +236,58 @@ export const useFormStore = create<IFormStore, [['zustand/immer', never]]>(
       })
     }
 
+    const saveForm = async (formData: FormData) => {
+      const questions = get().questions
+
+      const filteredQuestions = Array.from(questions.entries()).filter(
+        ([, question]) => {
+          if (question.title.trim() === '') return false
+
+          if (
+            (question.type === 'multiple_choice' ||
+              question.type === 'unique_choice') &&
+            (!question.choices ||
+              question.choices.filter((c) => c.value.trim() !== '').length < 2)
+          ) {
+            return false
+          }
+
+          return true
+        },
+      )
+
+      const orderedQuestions = filteredQuestions.sort(
+        (a, b) => a[1].order - b[1].order,
+      )
+
+      set((state) => {
+        orderedQuestions.forEach(([id, _], index) => {
+          const q = state.questions.get(id)
+          if (q) q.order = index
+        })
+      })
+
+      const newQuestions = new Map<string, IQuestion>(
+        orderedQuestions.map(([id, question]) => [id, question]),
+      )
+
+      if (newQuestions.size === 0) {
+        toast.error(
+          'Você precisa adicionar pelo menos uma pergunta ao formulário.',
+        )
+        return
+      }
+
+      formData.append(
+        'questions',
+        JSON.stringify(Array.from(newQuestions.values())),
+      )
+
+      await createForm(formData)
+
+      toast.success('Formulário criado com sucesso!')
+    }
+
     return {
       questions: firstData().questions,
       addQuestion,
@@ -233,6 +302,7 @@ export const useFormStore = create<IFormStore, [['zustand/immer', never]]>(
       reorderQuestions,
       addConditionalQuestion,
       updateConditionalQuestion,
+      saveForm,
     }
   }),
 )

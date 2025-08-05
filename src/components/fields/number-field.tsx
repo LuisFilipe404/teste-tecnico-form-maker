@@ -36,7 +36,9 @@ export default function NumberField({ id, dragHandleProps }: NumberFieldProps) {
           </span>
           <div className="flex items-center gap-3">
             <FieldIcon icon={<NumberIcon color="#77B5FE" />} />
-            <span className="font-semibold">Campo de Número</span>
+            <span className="hidden font-semibold lg:block">
+              Campo de Número
+            </span>
           </div>
         </div>
         <div className="flex items-center gap-2">

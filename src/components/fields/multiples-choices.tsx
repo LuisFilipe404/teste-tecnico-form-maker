@@ -87,7 +87,9 @@ export default function MultiplesChoices({
             </span>
             <div className="flex items-center gap-3">
               <FieldIcon icon={<ListTodo size={20} />} />
-              <span className="font-semibold">Campo de Múltipla Escolha</span>
+              <span className="hidden font-semibold lg:block">
+                Campo de Múltipla Escolha
+              </span>
             </div>
           </div>
           <div className="flex items-center gap-2">
@@ -143,6 +145,7 @@ export default function MultiplesChoices({
 
                 <ToolTip content="Pergunta Condicional a Essa Opção">
                   <button
+                    type="button"
                     data-active={choice.additionalQuestion !== undefined}
                     onClick={() => handleAddConditionalQuestion(choice.order)}
                     className="text-gray-3 hover:text-gray-text data-[active=true]:text-primary-400 cursor-pointer transition-colors"
@@ -156,6 +159,7 @@ export default function MultiplesChoices({
         </div>
         {choices.length <= 10 && (
           <button
+            type="button"
             onClick={handleAddChoice}
             className="text-primary-400 hover:text-primary-600 focus:text-primary-600 mt-4 flex cursor-pointer items-center gap-2 outline-0 transition-colors"
           >
@@ -175,7 +179,9 @@ export default function MultiplesChoices({
             <div className="mb-4 flex items-center gap-3">
               <div className="flex items-center gap-3">
                 <FieldIcon icon={<Workflow size={20} />} />
-                <span className="font-semibold">Pergunta Condicional</span>
+                <span className="hidden font-semibold lg:block">
+                  Pergunta Condicional
+                </span>
               </div>
               <Badge className="bg-primary-400 font-semibold">
                 <Workflow />

@@ -1,3 +1,4 @@
+import type { ComponentProps } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { tv, type VariantProps } from 'tailwind-variants'
 
@@ -22,7 +23,9 @@ const button = tv({
   },
 })
 
-interface ButtonProps extends VariantProps<typeof button> {
+interface ButtonProps
+  extends VariantProps<typeof button>,
+    Omit<ComponentProps<'button'>, 'color'> {
   children: React.ReactNode
 }
 

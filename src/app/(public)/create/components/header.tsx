@@ -11,7 +11,7 @@ export default function CreateHeader() {
         title="Criar Novo Formulário"
         subtitle="Customize o Layout do Seu Formulário e Adicione Novos Campos"
       >
-        <Button hasicon="t">
+        <Button hasicon="t" type="submit">
           <Save />
           Salvar Formulário
         </Button>

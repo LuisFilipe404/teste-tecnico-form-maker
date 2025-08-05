@@ -9,6 +9,7 @@ export interface IQuestion {
     | 'number'
     | 'float'
   required: boolean
+  order: number
   choices?: {
     order: number
     value: string

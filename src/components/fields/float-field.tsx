@@ -4,8 +4,8 @@ import FieldIcon from './field-icon'
 import AutoResizeTextarea from '../auto-resize-text-area'
 import { useFormStore } from '@/app/(public)/create/store/form-store'
 import ToolTip from '../tooltip'
-import { Switch } from '@radix-ui/react-switch'
 import { DropdownOptions } from './dropdown-options'
+import { Switch } from '../ui/switch'
 
 interface FloatFieldProps {
   id: string
@@ -35,7 +35,9 @@ export default function FloatField({ id, dragHandleProps }: FloatFieldProps) {
           </span>
           <div className="flex items-center gap-3">
             <FieldIcon icon={<DecimalsArrowRight size={20} />} />
-            <span className="font-semibold">Campo de Número Decimal</span>
+            <span className="hidden font-semibold lg:block">
+              Campo de Número Decimal
+            </span>
           </div>
         </div>
         <div className="flex items-center gap-2">

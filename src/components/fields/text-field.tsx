@@ -36,7 +36,9 @@ export default function TextField({ id, dragHandleProps }: TextFieldProps) {
           </span>
           <div className="flex items-center gap-3">
             <FieldIcon icon={<Type size={20} />} />
-            <span className="font-semibold">Campo de Texto</span>
+            <span className="hidden font-semibold lg:block">
+              Campo de Texto
+            </span>
           </div>
         </div>
         <div className="flex items-center gap-2">

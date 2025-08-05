@@ -35,7 +35,9 @@ export default function YesNoField({ id, dragHandleProps }: YesNoFieldProps) {
           </span>
           <div className="flex items-center gap-3">
             <FieldIcon icon={<UserCheck size={20} />} />
-            <span className="font-semibold">Campo de Sim ou Não</span>
+            <span className="hidden font-semibold lg:block">
+              Campo de Sim ou Não
+            </span>
           </div>
         </div>
         <div className="flex items-center gap-2">

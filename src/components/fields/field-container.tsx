@@ -1,7 +1,7 @@
 import { tv, type VariantProps } from 'tailwind-variants'
 
 const container = tv({
-  base: 'w-full rounded-[16px] p-6 transition-colors duration-200',
+  base: 'w-full rounded-[16px] p-4 lg:p-6 transition-colors duration-200',
   variants: {
     theme: {
       default: 'bg-white border-gray-border border hover:border-primary-400',

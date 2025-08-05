@@ -17,7 +17,7 @@ export default function ToolBar() {
   const addQuestion = useFormStore((state) => state.addQuestion)
 
   return (
-    <div className="sticky top-[100px]">
+    <div className="top-[100px] xl:sticky">
       <ToolContainer>
         <ToolTitle text="Campos" />
         <div className="mt-6 grid grid-cols-2 grid-rows-3 gap-3">

@@ -8,3 +8,44 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Form {
+  id        String   @id @default(cuid())
+  title     String
+  subtitle String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  questions Question[]
+  cover  String?
+
+  @@map("forms")
+}
+
+model Question {
+  id        String   @id @default(cuid())
+  formId    String
+  type      String
+  title     String
+  required  Boolean @default(false)
+  choices  Choices[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  order     Int
+
+  form Form @relation(fields: [formId], references: [id])
+
+  @@map("questions")
+}
+
+model Choices {
+  id        String   @id @default(cuid())
+  questionId String
+  value     String
+  order     Int
+  additionalQuestion String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  question Question @relation(fields: [questionId], references: [id])
+
+  @@map("choices")
+}
