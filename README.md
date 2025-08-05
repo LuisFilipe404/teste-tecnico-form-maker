@@ -1,37 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 📝 Form Maker
 
-## Getting Started
+Form Maker é um projeto desenvolvido como teste técnico. Ele permite a criação dinâmica de formulários com múltiplos tipos de perguntas, organização por ordem, e visual responsivo com Tailwind CSS.
 
-First, run the development server:
+---
+
+## 🚀 Tecnologias Utilizadas
+
+- [Next.js 15](https://nextjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Prisma ORM](https://www.prisma.io/)
+- [PostgreSQL](https://www.postgresql.org/)
+- [Zustand](https://github.com/pmndrs/zustand) – gerenciamento de estado
+
+---
+
+## 💻 Como Rodar Localmente
+
+Clone o repositório:
+
+```bash
+cd https://github.com/LuisFilipe404/teste-tecnico-form-maker.git
+cd form-maker
+```
+
+Instale as dependências:
+
+```bash
+npm install
+```
+
+Crie um arquivo `.env` com as variáveis necessárias:
+
+```env
+DATABASE_USER="postgres"
+DATABASE_PASSWORD="715905854476"
+DATABASE_HOST="localhost"
+DATABASE_PORT=5432
+DATABASE_NAME="main"
+
+DATABASE_URL="postgresql://${DATABASE_USER}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}"
+```
+
+Rode o Banco de Dados Postgres no Docker compose (Certifique-se de ter disponível a porta 5432):
+
+```bash
+docker compose up -d
+```
+
+Rode as migrações do banco de dados:
+
+```bash
+npx prisma migrate dev
+```
+
+Inicie o servidor de desenvolvimento:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abra [http://localhost:3000](http://localhost:3000) para ver o projeto rodando.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📜 Scripts Disponíveis
 
-## Learn More
+```bash
+npm run dev         # Inicia o servidor de desenvolvimento
+npm run build       # Gera o build de produção
+npm run start       # Inicia o servidor após o build
+npx prisma studio   # Abre o Prisma Studio para visualizar o banco
+```
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🧪 Status do Teste Técnico
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+✅  Implementação:
 
-## Deploy on Vercel
+- Criação de formulários dinâmicos  
+- Drag and drop para ordenação das questões  
+- Validação de campos  
+- Salvar no banco com Prisma  
+- Responsividade
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# teste-tecnico-form-maker

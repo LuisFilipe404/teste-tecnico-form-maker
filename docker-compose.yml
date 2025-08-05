@@ -12,17 +12,6 @@ services:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - postgres_network
-  form-maker: 
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: form-maker-app
-    ports:
-      - '3000:3000'
-    depends_on:
-      - postgres
-    networks:
-      - postgres_network
 
 volumes:
   postgres_data:
