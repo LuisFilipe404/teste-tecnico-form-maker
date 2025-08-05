@@ -48,7 +48,7 @@ Rode o Banco de Dados Postgres no Docker compose (Certifique-se de ter disponív
 docker compose up -d
 ```
 
-Rode as migrações do banco de dados:
+Rode as migrações do banco de dados e Escolha um nome para as migrations:
 
 ```bash
 npx prisma migrate dev
